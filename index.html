@@ -94,9 +94,87 @@
                 display: none !important;
             }
         }
+
+        /* Mencegah zoom otomatis saat fokus input di layar HP */
+        @media (max-width: 640px) {
+            input[type="text"],
+            input[type="number"],
+            input[type="password"],
+            select {
+                font-size: 16px !important;
+            }
+        }
     </style>
 </head>
-<body class="text-slate-800 bg-slate-100 min-h-screen flex flex-col antialiased selection:bg-orange-500 selection:text-white">
+<body class="text-slate-800 bg-slate-100 min-h-screen flex flex-col antialiased selection:bg-orange-500 selection:text-white pb-20 md:pb-0">
+
+    <!-- LAYAR LOGIN USERNAME & PASSWORD -->
+    <div id="loginScreen" class="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 px-4 py-6 no-print overflow-hidden">
+        <!-- Gambar Latar Belakang Bengkel / Otomotif -->
+        <img src="https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?auto=format&fit=crop&w=1600&q=80"
+             alt="Latar Belakang Bengkel Motor"
+             class="absolute inset-0 w-full h-full object-cover object-center opacity-35 scale-105 pointer-events-none select-none"
+             onerror="this.style.display='none';">
+        <!-- Lapisan Gradasi Gelap agar Form Login Tetap Jelas -->
+        <div class="absolute inset-0 bg-gradient-to-br from-slate-950/85 via-slate-900/75 to-orange-950/60 pointer-events-none"></div>
+
+        <div class="relative z-10 bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl border border-slate-200/90 w-full max-w-md overflow-hidden">
+            <div class="bg-gradient-to-r from-white via-slate-100 to-slate-900 px-6 py-5 border-b border-slate-200 flex items-center gap-3.5">
+                <img src="https://i.ibb.co.com/LDcm9j6S/Junior-Jaya-Motor-Racing-Logo-removebg-preview.png"
+                     alt="Junior Jaya Motor Logo"
+                     class="h-12 w-auto object-contain drop-shadow-sm"
+                     onerror="this.onerror=null; this.replaceWith(document.createRange().createContextualFragment('<div class=\'w-11 h-11 rounded-xl bg-slate-900 text-orange-400 flex items-center justify-center text-lg\'><i class=\'fa-solid fa-wrench\'></i></div>'));">
+                <div>
+                    <h2 class="font-extrabold text-base sm:text-lg uppercase tracking-wide leading-tight">
+                        <span class="text-slate-900">Junior Jaya</span> <span class="text-red-600">Motor</span>
+                    </h2>
+                    <p class="text-[11px] font-semibold text-orange-600">Application Development By Rich Moika</p>
+                </div>
+            </div>
+
+            <form id="loginForm" class="p-6 space-y-4">
+                <div>
+                    <h3 class="text-sm font-extrabold text-slate-800">Masuk ke Sistem Kasir & Stok</h3>
+                    <p class="text-xs text-slate-500 mt-0.5">Masukkan username dan password untuk mengakses aplikasi.</p>
+                </div>
+
+                <div id="loginErrorBox" class="hidden p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-semibold flex items-center gap-2">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <span id="loginErrorText">Username atau password salah!</span>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Username</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400 text-xs">
+                            <i class="fa-solid fa-user"></i>
+                        </span>
+                        <input type="text" id="loginUsernameInput" required autocomplete="username" placeholder="Masukkan username"
+                            class="w-full pl-9 pr-3 py-2.5 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white font-medium">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Password</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400 text-xs">
+                            <i class="fa-solid fa-lock"></i>
+                        </span>
+                        <input type="password" id="loginPasswordInput" required autocomplete="current-password" placeholder="Masukkan password"
+                            class="w-full pl-9 pr-10 py-2.5 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white font-medium">
+                        <button type="button" onclick="togglePasswordVisibility('loginPasswordInput', 'loginEyeIcon')" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600">
+                            <i id="loginEyeIcon" class="fa-solid fa-eye text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full py-3 bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white font-extrabold text-sm rounded-xl shadow-lg shadow-orange-600/30 transition transform active:scale-95 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-right-to-bracket"></i>
+                    <span>Masuk Aplikasi</span>
+                </button>
+            </form>
+        </div>
+    </div>
 
     <!-- TOP HEADER NAVBAR -->
     <header class="bg-gradient-to-r from-white via-slate-100 to-slate-900 text-slate-900 sticky top-0 z-30 shadow-lg border-b border-slate-300/70 no-print backdrop-blur-md">
@@ -109,7 +187,7 @@
                          class="h-10 sm:h-12 w-auto object-contain filter drop-shadow-[0_2px_4px_rgba(15,23,42,0.18)] transition duration-200 opacity-95 hover:opacity-100"
                          onerror="this.onerror=null; this.replaceWith(document.createRange().createContextualFragment('<div class=\'w-10 h-10 rounded-xl bg-gradient-to-br from-amber-600 to-slate-900 flex items-center justify-center shadow-md\'><i class=\'fa-solid fa-wrench text-white text-lg\'></i></div>'));">
                     <div>
-                        <h1 class="font-extrabold text-base sm:text-lg leading-tight uppercase tracking-wide">
+                        <h1 id="headerBrandTitle" class="font-extrabold text-base sm:text-lg leading-tight uppercase tracking-wide">
                             <span class="text-slate-900">Junior Jaya</span> <span class="text-red-600">Motor</span>
                         </h1>
                         <p class="text-[10px] text-orange-600 font-semibold leading-tight mt-0.5">Application Development By Rich Moika</p>
@@ -118,22 +196,26 @@
 
                 <!-- MAIN NAVIGATION TABS (DESKTOP & TABLET) -->
                 <nav class="hidden md:flex items-center space-x-1 bg-slate-900/90 p-1 rounded-xl border border-slate-700/70 backdrop-blur-sm shadow-inner">
-                    <button id="navTabKasir" onclick="switchTab('kasir')" class="flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-bold transition">
+                    <button id="navTabKasir" onclick="switchTab('kasir')" class="flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-bold transition">
                         <i class="fa-solid fa-cash-register text-sm"></i>
                         <span>Kasir & POS</span>
                         <span id="navCartBadge" class="hidden bg-orange-500 text-white text-[10px] px-1.5 py-0.2 rounded-full font-extrabold">0</span>
                     </button>
-                    <button id="navTabStok" onclick="switchTab('stok')" class="flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-bold transition">
+                    <button id="navTabStok" onclick="switchTab('stok')" class="flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-bold transition">
                         <i class="fa-solid fa-boxes-stacked text-sm"></i>
                         <span>Stok & Master</span>
                     </button>
-                    <button id="navTabKartuStok" onclick="switchTab('kartustok')" class="flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-bold transition">
+                    <button id="navTabKartuStok" onclick="switchTab('kartustok')" class="flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-bold transition">
                         <i class="fa-solid fa-clipboard-list text-sm"></i>
                         <span>Kartu Stok</span>
                     </button>
-                    <button id="navTabRiwayat" onclick="switchTab('riwayat')" class="flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-bold transition">
+                    <button id="navTabRiwayat" onclick="switchTab('riwayat')" class="flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-bold transition">
                         <i class="fa-solid fa-receipt text-sm"></i>
                         <span>Riwayat POS</span>
+                    </button>
+                    <button id="navTabPengaturan" onclick="switchTab('pengaturan')" class="flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-bold transition">
+                        <i class="fa-solid fa-gear text-sm"></i>
+                        <span>Pengaturan</span>
                     </button>
                 </nav>
 
@@ -153,37 +235,41 @@
         </div>
 
         <!-- MOBILE BOTTOM NAVIGATION TABS -->
-        <div class="md:hidden bg-slate-950 border-t border-slate-800/80 px-2 py-1.5 flex justify-around items-center">
-            <button id="mobNavTabKasir" onclick="switchTab('kasir')" class="flex flex-col items-center py-1 px-2.5 rounded-lg text-[11px] font-bold text-slate-400">
+        <div class="md:hidden bg-slate-950 border-t border-slate-800/80 px-1.5 py-1.5 flex justify-around items-center">
+            <button id="mobNavTabKasir" onclick="switchTab('kasir')" class="flex flex-col items-center py-1 px-2 rounded-lg text-[10px] font-bold text-slate-400">
                 <div class="relative">
                     <i class="fa-solid fa-cash-register text-base"></i>
                     <span id="mobCartBadge" class="hidden absolute -top-1 -right-2 bg-orange-500 text-white text-[9px] px-1 rounded-full font-extrabold">0</span>
                 </div>
                 <span class="mt-0.5">Kasir</span>
             </button>
-            <button id="mobNavTabStok" onclick="switchTab('stok')" class="flex flex-col items-center py-1 px-2.5 rounded-lg text-[11px] font-bold text-slate-400">
+            <button id="mobNavTabStok" onclick="switchTab('stok')" class="flex flex-col items-center py-1 px-2 rounded-lg text-[10px] font-bold text-slate-400">
                 <i class="fa-solid fa-boxes-stacked text-base"></i>
                 <span class="mt-0.5">Stok</span>
             </button>
-            <button id="mobNavTabKartuStok" onclick="switchTab('kartustok')" class="flex flex-col items-center py-1 px-2.5 rounded-lg text-[11px] font-bold text-slate-400">
+            <button id="mobNavTabKartuStok" onclick="switchTab('kartustok')" class="flex flex-col items-center py-1 px-2 rounded-lg text-[10px] font-bold text-slate-400">
                 <i class="fa-solid fa-clipboard-list text-base"></i>
                 <span class="mt-0.5">Kartu Stok</span>
             </button>
-            <button id="mobNavTabRiwayat" onclick="switchTab('riwayat')" class="flex flex-col items-center py-1 px-2.5 rounded-lg text-[11px] font-bold text-slate-400">
+            <button id="mobNavTabRiwayat" onclick="switchTab('riwayat')" class="flex flex-col items-center py-1 px-2 rounded-lg text-[10px] font-bold text-slate-400">
                 <i class="fa-solid fa-receipt text-base"></i>
                 <span class="mt-0.5">Riwayat</span>
+            </button>
+            <button id="mobNavTabPengaturan" onclick="switchTab('pengaturan')" class="flex flex-col items-center py-1 px-2 rounded-lg text-[10px] font-bold text-slate-400">
+                <i class="fa-solid fa-gear text-base"></i>
+                <span class="mt-0.5">Setting</span>
             </button>
         </div>
     </header>
 
     <!-- MAIN APP CONTENT AREA -->
-    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-5 space-y-6 no-print">
+    <main class="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6 space-y-5 sm:space-y-6 no-print">
 
         <!-- ================================================================= -->
         <!-- TAB 1: KASIR / POS TRANSAKSI BENGKEL -->
         <!-- ================================================================= -->
         <section id="tabKasir" class="space-y-4">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-5 items-start">
                 
                 <!-- LEFT COLUMN (COL-7): SEARCH, PRODUCTS, & SERVICE INPUT -->
                 <div class="lg:col-span-7 space-y-4">
@@ -237,7 +323,7 @@
                             <span id="posCatalogCount">0 item</span>
                         </div>
 
-                        <div id="posProductGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-[460px] overflow-y-auto pr-1">
+                        <div id="posProductGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 gap-2.5 sm:gap-3 max-h-[380px] sm:max-h-[460px] overflow-y-auto pr-1">
                             <!-- Items rendered dynamically via JS -->
                         </div>
 
@@ -251,8 +337,8 @@
                 </div>
 
                 <!-- RIGHT COLUMN (COL-5): ACTIVE CART / CHECKOUT NOTA -->
-                <div class="lg:col-span-5 space-y-4 sticky top-20">
-                    <div class="bg-white rounded-xl shadow-md border border-slate-200/90 overflow-hidden flex flex-col min-h-[540px]">
+                <div class="lg:col-span-5 space-y-4 lg:sticky lg:top-20">
+                    <div class="bg-white rounded-xl shadow-md border border-slate-200/90 overflow-hidden flex flex-col min-h-[420px] sm:min-h-[540px]">
                         
                         <!-- Cart Header -->
                         <div class="bg-slate-900 text-white px-4 py-3 flex items-center justify-between border-b border-slate-800">
@@ -285,7 +371,7 @@
                         </div>
 
                         <!-- Cart Items List Container -->
-                        <div id="cartItemsContainer" class="flex-1 p-3 overflow-y-auto divide-y divide-slate-100 max-h-[300px]">
+                        <div id="cartItemsContainer" class="flex-1 p-3 overflow-y-auto divide-y divide-slate-100 max-h-[240px] sm:max-h-[300px]">
                             <!-- Cart items rendered by JS -->
                         </div>
 
@@ -698,6 +784,202 @@
                 </div>
             </div>
 
+        </section>
+
+        <!-- ================================================================= -->
+        <!-- TAB 5: PENGATURAN AKUN LOGIN & BENGKEL -->
+        <!-- ================================================================= -->
+        <section id="tabPengaturan" class="space-y-6 hidden">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+
+                <!-- GANTI USERNAME & PASSWORD LOGIN -->
+                <div class="lg:col-span-6 bg-white rounded-2xl shadow-sm border border-slate-200/80 overflow-hidden">
+                    <div class="bg-slate-900 text-white px-5 py-4 flex items-center justify-between">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-9 h-9 rounded-lg bg-orange-500/20 text-orange-400 flex items-center justify-center">
+                                <i class="fa-solid fa-user-shield"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-sm">Pengaturan Akun Login</h3>
+                                <p class="text-[11px] text-slate-400">Ubah username dan password masuk aplikasi</p>
+                            </div>
+                        </div>
+                        <button type="button" onclick="logoutUser()" class="px-3 py-1.5 rounded-lg bg-rose-600/90 hover:bg-rose-500 text-white text-xs font-bold flex items-center gap-1.5 transition">
+                            <i class="fa-solid fa-right-from-bracket"></i>
+                            <span>Logout</span>
+                        </button>
+                    </div>
+
+                    <form id="accountSettingsForm" class="p-5 space-y-4">
+                        <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between text-xs">
+                            <span class="text-slate-500">Akun Sedang Login:</span>
+                            <span id="currentActiveUsernameBadge" class="font-mono font-extrabold text-slate-800 bg-white px-2.5 py-1 rounded-md border border-slate-200">admin</span>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">
+                                Pilih Akun yang Diubah
+                            </label>
+                            <select id="settingTargetAccountSelect" onchange="onTargetAccountChange()"
+                                class="w-full px-3.5 py-2.5 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:bg-white font-semibold disabled:opacity-75 disabled:cursor-not-allowed">
+                            </select>
+                            <p id="accountEditScopeHint" class="text-[11px] text-slate-500 mt-1">
+                                Setiap akun hanya dapat mengganti username dan password miliknya sendiri.
+                            </p>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">
+                                Username Baru <span class="text-rose-500">*</span>
+                            </label>
+                            <input type="text" id="settingNewUsername" required minlength="3" placeholder="Masukkan username baru"
+                                class="w-full px-3.5 py-2.5 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:bg-white font-semibold">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">
+                                Password Saat Ini (Akun Aktif) <span class="text-rose-500">*</span>
+                            </label>
+                            <div class="relative">
+                                <input type="password" id="settingCurrentPassword" required placeholder="Masukkan password akun aktif untuk verifikasi"
+                                    class="w-full pl-3.5 pr-10 py-2.5 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:bg-white font-medium">
+                                <button type="button" onclick="togglePasswordVisibility('settingCurrentPassword', 'eyeCurrentPass')" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600">
+                                    <i id="eyeCurrentPass" class="fa-solid fa-eye text-xs"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                            <div>
+                                <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">
+                                    Password Baru <span class="text-rose-500">*</span>
+                                </label>
+                                <div class="relative">
+                                    <input type="password" id="settingNewPassword" required minlength="4" placeholder="Minimal 4 karakter"
+                                        class="w-full pl-3.5 pr-10 py-2.5 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:bg-white font-medium">
+                                    <button type="button" onclick="togglePasswordVisibility('settingNewPassword', 'eyeNewPass')" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600">
+                                        <i id="eyeNewPass" class="fa-solid fa-eye text-xs"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">
+                                    Konfirmasi Password Baru <span class="text-rose-500">*</span>
+                                </label>
+                                <div class="relative">
+                                    <input type="password" id="settingConfirmPassword" required minlength="4" placeholder="Ulangi password baru"
+                                        class="w-full pl-3.5 pr-10 py-2.5 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:bg-white font-medium">
+                                    <button type="button" onclick="togglePasswordVisibility('settingConfirmPassword', 'eyeConfirmPass')" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600">
+                                        <i id="eyeConfirmPass" class="fa-solid fa-eye text-xs"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pt-2 flex items-center justify-end gap-2 border-t border-slate-100">
+                            <button type="submit" class="px-5 py-2.5 rounded-xl bg-orange-600 hover:bg-orange-500 text-white text-xs font-extrabold shadow-md flex items-center gap-2 transition">
+                                <i class="fa-solid fa-key"></i>
+                                <span>Simpan Perubahan Akun</span>
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- MASTER TAMBAH AKUN TAMBAHAN & DAFTAR AKUN -->
+                    <div class="px-5 pb-5 pt-4 border-t border-slate-200 bg-slate-50/60 space-y-4">
+                        <div>
+                            <h4 class="text-xs font-extrabold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+                                <i class="fa-solid fa-user-plus text-orange-600"></i>
+                                <span>Master Tambah Akun Baru</span>
+                            </h4>
+                            <p class="text-[11px] text-slate-500 mt-0.5">Tambahkan akun kasir, mekanik, atau admin tambahan.</p>
+                        </div>
+
+                        <form id="addUserAccountForm" class="grid grid-cols-1 sm:grid-cols-12 gap-2.5">
+                            <div class="sm:col-span-4">
+                                <input type="text" id="newAccountUsername" required minlength="3" placeholder="Username baru"
+                                    class="w-full px-3 py-2 text-xs bg-white border border-slate-300 rounded-xl focus:ring-2 focus:ring-orange-500 font-semibold">
+                            </div>
+                            <div class="sm:col-span-4">
+                                <input type="password" id="newAccountPassword" required minlength="4" placeholder="Password baru"
+                                    class="w-full px-3 py-2 text-xs bg-white border border-slate-300 rounded-xl focus:ring-2 focus:ring-orange-500 font-medium">
+                            </div>
+                            <div class="sm:col-span-2">
+                                <select id="newAccountRole"
+                                    class="w-full px-2.5 py-2 text-xs bg-white border border-slate-300 rounded-xl focus:ring-2 focus:ring-orange-500 font-semibold">
+                                    <option value="Kasir">Kasir</option>
+                                    <option value="Admin">Admin</option>
+                                    <option value="Pemilik">Pemilik</option>
+                                </select>
+                            </div>
+                            <div class="sm:col-span-2">
+                                <button type="submit" class="w-full py-2 px-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-extrabold flex items-center justify-center gap-1 transition">
+                                    <i class="fa-solid fa-plus"></i>
+                                    <span>Tambah</span>
+                                </button>
+                            </div>
+                        </form>
+
+                        <div class="space-y-1.5">
+                            <div class="text-[11px] font-bold uppercase tracking-wider text-slate-500">Daftar Akun Terdaftar</div>
+                            <div id="userAccountsList" class="divide-y divide-slate-200 bg-white rounded-xl border border-slate-200 px-3">
+                                <!-- Rendered via JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PENGATURAN IDENTITAS BENGKEL & STRUK -->
+                <div class="lg:col-span-6 bg-white rounded-2xl shadow-sm border border-slate-200/80 overflow-hidden">
+                    <div class="bg-slate-900 text-white px-5 py-4 flex items-center gap-2.5">
+                        <div class="w-9 h-9 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
+                            <i class="fa-solid fa-store"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-sm">Pengaturan Profil Bengkel & Struk</h3>
+                            <p class="text-[11px] text-slate-400">Sesuaikan informasi bengkel yang tampil di nota</p>
+                        </div>
+                    </div>
+
+                    <form id="workshopSettingsForm" class="p-5 space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">
+                                Nama Bengkel <span class="text-rose-500">*</span>
+                            </label>
+                            <input type="text" id="settingWorkshopName" required placeholder="Junior Jaya Motor"
+                                class="w-full px-3.5 py-2.5 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:bg-white font-semibold">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">
+                                Alamat Bengkel (Tampil di Struk) <span class="text-rose-500">*</span>
+                            </label>
+                            <input type="text" id="settingWorkshopAddress" required placeholder="Maralee, Petasia Barat, Morowali Utara"
+                                class="w-full px-3.5 py-2.5 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:bg-white font-medium">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">
+                                Pesan Terima Kasih di Struk
+                            </label>
+                            <input type="text" id="settingReceiptFooterNote" placeholder="Terima kasih telah mempercayakan kendaraan Anda."
+                                class="w-full px-3.5 py-2.5 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:bg-white font-medium">
+                        </div>
+
+                        <div class="p-3 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-800 flex items-start gap-2">
+                            <i class="fa-solid fa-cloud-arrow-up text-amber-600 mt-0.5"></i>
+                            <span>Data kredensial login dan profil bengkel otomatis tersimpan lokal serta disinkronkan ke Firebase Realtime Database.</span>
+                        </div>
+
+                        <div class="pt-2 flex items-center justify-end gap-2 border-t border-slate-100">
+                            <button type="submit" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-extrabold shadow-md flex items-center gap-2 transition">
+                                <i class="fa-solid fa-floppy-disk"></i>
+                                <span>Simpan Pengaturan Bengkel</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
         </section>
 
     </main>
@@ -1187,6 +1469,69 @@
                     console.warn('RTDB transactions listener error:', err);
                 });
 
+                // 5. Sinkronisasi Kredensial Login & Pengaturan Bengkel
+                onValue(ref(db, 'junior_jaya_motor/auth'), (snapshot) => {
+                    isApplyingRemoteSnapshot = true;
+                    try {
+                        const val = snapshot.val();
+                        if (val && typeof val === 'object') {
+                            if (Array.isArray(val.accounts) && val.accounts.length > 0) {
+                                window.userAccounts = val.accounts.map((acc, idx) => ({
+                                    id: acc.id || `acc-${idx + 1}`,
+                                    username: String(acc.username),
+                                    password: String(acc.password),
+                                    role: acc.role || (idx === 0 ? 'Pemilik' : 'Kasir')
+                                }));
+                                window.authConfig = { ...window.userAccounts[0] };
+                                localStorage.setItem('bengkel_user_accounts_v1', JSON.stringify(window.userAccounts));
+                                localStorage.setItem('bengkel_auth_config_v1', JSON.stringify(window.authConfig));
+                                if (typeof window.syncAuthUi === 'function') window.syncAuthUi();
+                            } else if (val.username && val.password) {
+                                window.authConfig = {
+                                    username: String(val.username),
+                                    password: String(val.password),
+                                    role: val.role || 'Pemilik'
+                                };
+                                window.userAccounts = [{ id: 'acc-1', ...window.authConfig }];
+                                localStorage.setItem('bengkel_user_accounts_v1', JSON.stringify(window.userAccounts));
+                                localStorage.setItem('bengkel_auth_config_v1', JSON.stringify(window.authConfig));
+                                if (typeof window.syncAuthUi === 'function') window.syncAuthUi();
+                            }
+                        } else if (window.userAccounts && window.userAccounts.length > 0) {
+                            set(ref(db, 'junior_jaya_motor/auth'), {
+                                ...(window.authConfig || window.userAccounts[0]),
+                                accounts: window.userAccounts
+                            }).catch(() => {});
+                        }
+                    } finally {
+                        isApplyingRemoteSnapshot = false;
+                    }
+                }, (err) => {
+                    console.warn('RTDB auth listener error:', err);
+                });
+
+                onValue(ref(db, 'junior_jaya_motor/settings'), (snapshot) => {
+                    isApplyingRemoteSnapshot = true;
+                    try {
+                        const val = snapshot.val();
+                        if (val && typeof val === 'object') {
+                            window.appSettings = {
+                                workshopName: val.workshopName || 'Junior Jaya Motor',
+                                workshopAddress: val.workshopAddress || 'Maralee, Petasia Barat, Morowali Utara',
+                                receiptFooterNote: val.receiptFooterNote || 'Terima kasih telah mempercayakan kendaraan Anda.'
+                            };
+                            localStorage.setItem('bengkel_app_settings_v1', JSON.stringify(window.appSettings));
+                            if (typeof window.applyWorkshopSettingsUi === 'function') window.applyWorkshopSettingsUi();
+                        } else if (window.appSettings) {
+                            set(ref(db, 'junior_jaya_motor/settings'), window.appSettings).catch(() => {});
+                        }
+                    } finally {
+                        isApplyingRemoteSnapshot = false;
+                    }
+                }, (err) => {
+                    console.warn('RTDB settings listener error:', err);
+                });
+
                 // Bungkus fungsi penyimpanan lokal agar otomatis mengirim perubahan ke Realtime Database
                 const origSaveItems = window.saveItemsToStorage;
                 window.saveItemsToStorage = function() {
@@ -1211,6 +1556,20 @@
                     if (typeof origSaveTransactions === 'function') origSaveTransactions();
                     pushToRtdb('junior_jaya_motor/transactions', window.transactions || []);
                 };
+
+                window.saveAuthToRtdb = function() {
+                    const primary = (window.userAccounts && window.userAccounts[0]) || window.authConfig || {};
+                    pushToRtdb('junior_jaya_motor/auth', {
+                        username: primary.username || 'admin',
+                        password: primary.password || '123456',
+                        role: primary.role || 'Pemilik',
+                        accounts: window.userAccounts || [primary]
+                    });
+                };
+
+                window.saveSettingsToRtdb = function() {
+                    pushToRtdb('junior_jaya_motor/settings', window.appSettings || {});
+                };
             } catch (err) {
                 console.error('Gagal menginisialisasi Firebase Realtime Database:', err);
                 setRtdbStatus('offline', 'RTDB Init Error');
@@ -1229,6 +1588,14 @@
          */
         
         const DEFAULT_CATEGORIES = ['Ban', 'Oli', 'Spareparts Lain', 'Aksesoris', 'Aki', 'Kampas Rem'];
+        const DEFAULT_MASTER_AUTH = { id: 'master-owner', username: 'Neng29', password: '291696', role: 'Master Owner', isMaster: true };
+        const DEFAULT_AUTH = { id: 'acc-1', username: 'Neng29', password: '291696', role: 'Pemilik', isMaster: true };
+        const DEFAULT_ACCOUNTS = [{ id: 'acc-1', username: 'Neng29', password: '291696', role: 'Pemilik', isMaster: true }];
+        const DEFAULT_SETTINGS = {
+            workshopName: 'Junior Jaya Motor',
+            workshopAddress: 'Maralee, Petasia Barat, Morowali Utara',
+            receiptFooterNote: 'Terima kasih telah mempercayakan kendaraan Anda.'
+        };
         
         const DEMO_ITEMS = [
             {
@@ -1320,11 +1687,18 @@
         let categories = [];
         let transactions = [];
         let stockMutations = [];
+        let authConfig = { ...DEFAULT_AUTH };
+        let masterOwnerConfig = { ...DEFAULT_MASTER_AUTH };
+        let userAccounts = DEFAULT_ACCOUNTS.map(a => ({ ...a }));
+        let activeLoggedInUser = null;
+        let isMasterOwnerSession = false;
+        let appSettings = { ...DEFAULT_SETTINGS };
+        let isAuthenticated = false;
         let cart = [];
-        let activeTab = 'kasir'; // 'kasir' | 'stok' | 'kartustok' | 'riwayat'
+        let activeTab = 'kasir'; // 'kasir' | 'stok' | 'kartustok' | 'riwayat' | 'pengaturan'
+        let activeCategoryFilter = 'Semua';
         let posCategoryFilter = 'Semua';
         let posSearchTerm = '';
-        let activeCategoryFilter = 'Semua';
         let searchTerm = '';
         let currentSort = 'updated';
         let html5QrcodeScanner = null;
@@ -1499,12 +1873,66 @@
             const savedCategories = localStorage.getItem('bengkel_stok_categories_v2');
             const savedTransactions = localStorage.getItem('bengkel_stok_transactions_v2');
             const savedMutations = localStorage.getItem('bengkel_stok_mutations_v2');
+            const savedAuth = localStorage.getItem('bengkel_auth_config_v1');
+            const savedAccounts = localStorage.getItem('bengkel_user_accounts_v1');
+            const savedSession = sessionStorage.getItem('bengkel_logged_in_v1');
+            const savedSessionUser = sessionStorage.getItem('bengkel_logged_in_user_v1');
+            const savedMasterSession = sessionStorage.getItem('bengkel_master_session_v1');
+            const savedSettings = localStorage.getItem('bengkel_app_settings_v1');
 
-            if (savedItems) {
-                try { items = JSON.parse(savedItems); } catch (e) { items = [...DEMO_ITEMS]; }
+            if (savedAccounts) {
+                try {
+                    const parsedAcc = JSON.parse(savedAccounts);
+                    if (Array.isArray(parsedAcc) && parsedAcc.length > 0) {
+                        userAccounts = parsedAcc
+                            .filter(acc => !acc.isMaster)
+                            .map((acc, idx) => ({
+                                id: acc.id || `acc-${idx + 1}`,
+                                username: String(acc.username),
+                                password: String(acc.password),
+                                role: acc.role || (idx === 0 ? 'Pemilik' : 'Kasir'),
+                                isMaster: false
+                            }));
+                        authConfig = userAccounts[0] ? { ...userAccounts[0] } : { ...DEFAULT_MASTER_AUTH };
+                    }
+                } catch (e) {
+                    userAccounts = DEFAULT_ACCOUNTS.map(a => ({ ...a }));
+                }
+            } else if (savedAuth) {
+                try {
+                    const parsedAuth = JSON.parse(savedAuth);
+                    if (parsedAuth && parsedAuth.username && parsedAuth.password) {
+                        authConfig = {
+                            id: 'acc-1',
+                            username: String(parsedAuth.username),
+                            password: String(parsedAuth.password),
+                            role: parsedAuth.role || 'Pemilik',
+                            isMaster: Boolean(parsedAuth.isMaster)
+                        };
+                        userAccounts = [{ ...authConfig }];
+                    }
+                } catch (e) {
+                    authConfig = { ...DEFAULT_AUTH };
+                    userAccounts = DEFAULT_ACCOUNTS.map(a => ({ ...a }));
+                }
             } else {
-                items = [...DEMO_ITEMS];
-                saveItemsToStorage();
+                saveAuthToStorage();
+            }
+
+            isAuthenticated = savedSession === 'true';
+            isMasterOwnerSession = isAuthenticated && (savedMasterSession === 'true' || savedSessionUser === masterOwnerConfig.username);
+
+            if (isAuthenticated) {
+                if (isMasterOwnerSession && savedSessionUser === masterOwnerConfig.username) {
+                    activeLoggedInUser = { ...masterOwnerConfig };
+                } else if (savedSessionUser) {
+                    const matchedSessionAcc = userAccounts.find(u => u.username === savedSessionUser);
+                    activeLoggedInUser = matchedSessionAcc ? { ...matchedSessionAcc } : (userAccounts[0] ? { ...userAccounts[0] } : { ...masterOwnerConfig });
+                } else {
+                    activeLoggedInUser = userAccounts[0] ? { ...userAccounts[0] } : { ...masterOwnerConfig };
+                }
+            } else {
+                activeLoggedInUser = null;
             }
 
             if (savedCategories) {
@@ -1524,22 +1952,442 @@
                 stockMutations = [...DEMO_MUTATIONS];
                 saveMutationsToStorage();
             }
+
+            if (savedAuth) {
+                try {
+                    const parsedAuth = JSON.parse(savedAuth);
+                    if (parsedAuth && parsedAuth.username && parsedAuth.password) {
+                        authConfig = {
+                            username: String(parsedAuth.username),
+                            password: String(parsedAuth.password)
+                        };
+                    }
+                } catch (e) {
+                    authConfig = { ...DEFAULT_AUTH };
+                }
+            } else {
+                saveAuthToStorage();
+            }
+
+            if (savedSettings) {
+                try {
+                    const parsedSettings = JSON.parse(savedSettings);
+                    appSettings = {
+                        workshopName: parsedSettings.workshopName || DEFAULT_SETTINGS.workshopName,
+                        workshopAddress: parsedSettings.workshopAddress || DEFAULT_SETTINGS.workshopAddress,
+                        receiptFooterNote: parsedSettings.receiptFooterNote || DEFAULT_SETTINGS.receiptFooterNote
+                    };
+                } catch (e) {
+                    appSettings = { ...DEFAULT_SETTINGS };
+                }
+            } else {
+                saveSettingsToStorage();
+            }
+
+            isAuthenticated = savedSession === 'true';
         }
 
         function saveItemsToStorage() { localStorage.setItem('bengkel_stok_items_v2', JSON.stringify(items)); }
         function saveCategoriesToStorage() { localStorage.setItem('bengkel_stok_categories_v2', JSON.stringify(categories)); }
         function saveTransactionsToStorage() { localStorage.setItem('bengkel_stok_transactions_v2', JSON.stringify(transactions)); }
         function saveMutationsToStorage() { localStorage.setItem('bengkel_stok_mutations_v2', JSON.stringify(stockMutations)); }
+        function saveAuthToStorage() {
+            const primaryAccount = userAccounts[0] || authConfig || DEFAULT_AUTH;
+            authConfig = { ...primaryAccount };
+            localStorage.setItem('bengkel_user_accounts_v1', JSON.stringify(userAccounts));
+            localStorage.setItem('bengkel_auth_config_v1', JSON.stringify(authConfig));
+            window.userAccounts = userAccounts;
+            window.authConfig = authConfig;
+            if (typeof window.saveAuthToRtdb === 'function') window.saveAuthToRtdb();
+        }
+        function saveSettingsToStorage() {
+            localStorage.setItem('bengkel_app_settings_v1', JSON.stringify(appSettings));
+            window.appSettings = appSettings;
+            if (typeof window.saveSettingsToRtdb === 'function') window.saveSettingsToRtdb();
+        }
 
         // Ekspos state & renderer utama ke window agar dapat diakses modul Realtime Database
         window.items = items;
         window.categories = categories;
         window.transactions = transactions;
         window.stockMutations = stockMutations;
-        window.saveItemsToStorage = saveItemsToStorage;
-        window.saveCategoriesToStorage = saveCategoriesToStorage;
-        window.saveTransactionsToStorage = saveTransactionsToStorage;
-        window.saveMutationsToStorage = saveMutationsToStorage;
+        window.authConfig = authConfig;
+        window.userAccounts = userAccounts;
+        window.appSettings = appSettings;
+        function getCurrentVerifierAccount() {
+            if (isMasterOwnerSession) {
+                return { ...masterOwnerConfig };
+            }
+            if (activeLoggedInUser) {
+                const fresh = userAccounts.find(u => u.id === activeLoggedInUser.id || u.username === activeLoggedInUser.username);
+                if (fresh) return fresh;
+            }
+            return userAccounts[0] || authConfig;
+        }
+
+        function onTargetAccountChange() {
+            const selectEl = document.getElementById('settingTargetAccountSelect');
+            const newUserInput = document.getElementById('settingNewUsername');
+            if (!selectEl || !newUserInput) return;
+
+            if (!isMasterOwnerSession && activeLoggedInUser) {
+                selectEl.value = activeLoggedInUser.id;
+                newUserInput.value = activeLoggedInUser.username;
+                return;
+            }
+
+            const target = userAccounts.find(u => u.id === selectEl.value);
+            if (target) {
+                newUserInput.value = target.username;
+            }
+        }
+
+        function renderAccountsManagerList() {
+            const selectEl = document.getElementById('settingTargetAccountSelect');
+            const listEl = document.getElementById('userAccountsList');
+            const newUserInput = document.getElementById('settingNewUsername');
+            const scopeHint = document.getElementById('accountEditScopeHint');
+            const masterPanel = document.getElementById('userAccountsList')?.closest('.space-y-4')?.parentElement;
+
+            // Sembunyikan panel manajemen akun tambahan jika bukan sesi master rahasia owner
+            if (masterPanel) {
+                masterPanel.classList.toggle('hidden', !isMasterOwnerSession);
+            }
+
+            const visibleAccounts = userAccounts.filter(acc => !acc.isMaster);
+            const prevSelectedId = selectEl ? selectEl.value : '';
+
+            if (selectEl) {
+                const editableAccounts = (!isMasterOwnerSession && activeLoggedInUser)
+                    ? visibleAccounts.filter(acc => acc.id === activeLoggedInUser.id || acc.username === activeLoggedInUser.username)
+                    : visibleAccounts;
+
+                selectEl.innerHTML = editableAccounts.map(acc =>
+                    `<option value="${escapeHtml(acc.id)}">${escapeHtml(acc.username)} (${escapeHtml(acc.role || 'Kasir')})</option>`
+                ).join('');
+
+                if (!isMasterOwnerSession && activeLoggedInUser) {
+                    const selfAcc = editableAccounts[0] || activeLoggedInUser;
+                    selectEl.value = selfAcc.id;
+                    selectEl.disabled = true;
+                    if (scopeHint) {
+                        scopeHint.textContent = 'Akun kasir/pengguna hanya dapat mengubah username dan password akun milik sendiri.';
+                    }
+                } else {
+                    selectEl.disabled = false;
+                    const exists = editableAccounts.some(u => u.id === prevSelectedId);
+                    selectEl.value = exists ? prevSelectedId : (editableAccounts[0]?.id || '');
+                    if (scopeHint) {
+                        scopeHint.textContent = 'Mode Master Owner aktif: dapat mengubah akun manapun atau menambah akun baru.';
+                    }
+                }
+            }
+
+            const activeEditAcc = (!isMasterOwnerSession && activeLoggedInUser)
+                ? (visibleAccounts.find(u => u.id === activeLoggedInUser.id || u.username === activeLoggedInUser.username) || activeLoggedInUser)
+                : visibleAccounts.find(u => u.id === (selectEl ? selectEl.value : ''));
+
+            if (newUserInput && activeEditAcc && document.activeElement !== newUserInput) {
+                newUserInput.value = activeEditAcc.username;
+            }
+        }
+
+        function renderAccountsManagerList() {
+            const selectEl = document.getElementById('settingTargetAccountSelect');
+            const listEl = document.getElementById('userAccountsList');
+            const newUserInput = document.getElementById('settingNewUsername');
+            const masterPanel = document.getElementById('userAccountsList')?.closest('.space-y-4')?.parentElement;
+
+            // Sembunyikan panel manajemen akun tambahan jika bukan sesi master rahasia owner
+            if (masterPanel) {
+                masterPanel.classList.toggle('hidden', !isMasterOwnerSession);
+            }
+
+            const visibleAccounts = userAccounts.filter(acc => !acc.isMaster);
+            const prevSelectedId = selectEl ? selectEl.value : '';
+
+            if (selectEl) {
+                selectEl.innerHTML = visibleAccounts.map(acc =>
+                    `<option value="${escapeHtml(acc.id)}">${escapeHtml(acc.username)} (${escapeHtml(acc.role || 'Kasir')})</option>`
+                ).join('');
+                const exists = visibleAccounts.some(u => u.id === prevSelectedId);
+                selectEl.value = exists
+                    ? prevSelectedId
+                    : (visibleAccounts.find(u => u.username === activeLoggedInUser?.username)?.id || visibleAccounts[0]?.id || '');
+            }
+
+            const selectedAcc = visibleAccounts.find(u => u.id === (selectEl ? selectEl.value : ''));
+            if (newUserInput && selectedAcc && document.activeElement !== newUserInput) {
+                newUserInput.value = selectedAcc.username;
+            }
+
+            if (listEl) {
+                listEl.innerHTML = visibleAccounts.map((acc, idx) => {
+                    const isCurrentSession = !isMasterOwnerSession && activeLoggedInUser && (activeLoggedInUser.id === acc.id || activeLoggedInUser.username === acc.username);
+                    const canDelete = visibleAccounts.length > 1 && idx > 0 && !isCurrentSession;
+                    return `
+                        <div class="py-2.5 flex items-center justify-between gap-2 text-xs">
+                            <div class="min-w-0">
+                                <div class="flex items-center gap-1.5 flex-wrap">
+                                    <span class="font-mono font-extrabold text-slate-800">${escapeHtml(acc.username)}</span>
+                                    <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-700 border border-slate-200">${escapeHtml(acc.role || 'Kasir')}</span>
+                                    ${isCurrentSession ? '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-700">Aktif</span>' : ''}
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-1.5 shrink-0">
+                                <button type="button" onclick="selectAccountToEdit('${escapeHtml(acc.id)}')" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-[11px] transition">
+                                    Ubah
+                                </button>
+                                ${canDelete ? `
+                                    <button type="button" onclick="deleteUserAccount('${escapeHtml(acc.id)}')" class="px-2 py-1 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-600 font-bold text-[11px] transition" title="Hapus Akun">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                ` : ''}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+        }
+
+        function selectAccountToEdit(accId) {
+            const selectEl = document.getElementById('settingTargetAccountSelect');
+            if (!selectEl) return;
+            selectEl.value = accId;
+            onTargetAccountChange();
+            document.getElementById('settingNewUsername')?.focus();
+        }
+
+        function deleteUserAccount(accId) {
+            const target = userAccounts.find(u => u.id === accId);
+            if (!target) return;
+            if (userAccounts.length <= 1) {
+                showCustomAlert('Tidak Bisa Dihapus', 'Minimal harus ada satu akun utama yang tersisa.', 'warning');
+                return;
+            }
+            showCustomConfirm('Hapus Akun', `Hapus akun "${target.username}"?`, () => {
+                userAccounts = userAccounts.filter(u => u.id !== accId);
+                saveAuthToStorage();
+                syncAuthUi();
+                renderAccountsManagerList();
+            });
+        }
+
+        function syncAuthUi() {
+            const loginScreen = document.getElementById('loginScreen');
+            const activeBadge = document.getElementById('currentActiveUsernameBadge');
+            const verifier = getCurrentVerifierAccount();
+
+            if (activeBadge && verifier) {
+                activeBadge.textContent = `${verifier.username} (${verifier.role || 'Pemilik'})`;
+            }
+            renderAccountsManagerList();
+
+            if (loginScreen) {
+                if (isAuthenticated) {
+                    loginScreen.classList.add('hidden');
+                } else {
+                    loginScreen.classList.remove('hidden');
+                }
+            }
+        }
+
+        function applyWorkshopSettingsUi() {
+            const nameInput = document.getElementById('settingWorkshopName');
+            const addrInput = document.getElementById('settingWorkshopAddress');
+            const footerNoteInput = document.getElementById('settingReceiptFooterNote');
+            const headerTitle = document.getElementById('headerBrandTitle');
+
+            if (nameInput && document.activeElement !== nameInput) {
+                nameInput.value = appSettings.workshopName || DEFAULT_SETTINGS.workshopName;
+            }
+            if (addrInput && document.activeElement !== addrInput) {
+                addrInput.value = appSettings.workshopAddress || DEFAULT_SETTINGS.workshopAddress;
+            }
+            if (footerNoteInput && document.activeElement !== footerNoteInput) {
+                footerNoteInput.value = appSettings.receiptFooterNote || DEFAULT_SETTINGS.receiptFooterNote;
+            }
+
+            if (headerTitle) {
+                const rawName = (appSettings.workshopName || '').trim();
+                if (!rawName || rawName.toLowerCase() === 'junior jaya motor') {
+                    headerTitle.innerHTML = `<span class="text-slate-900">Junior Jaya</span> <span class="text-red-600">Motor</span>`;
+                } else {
+                    const parts = rawName.split(/\s+/);
+                    if (parts.length > 1) {
+                        const lastWord = parts.pop();
+                        headerTitle.innerHTML = `<span class="text-slate-900">${escapeHtml(parts.join(' '))}</span> <span class="text-red-600">${escapeHtml(lastWord)}</span>`;
+                    } else {
+                        headerTitle.innerHTML = `<span class="text-slate-900">${escapeHtml(rawName)}</span>`;
+                    }
+                }
+            }
+
+            if (currentActiveReceipt) {
+                renderPrintableReceipt(currentActiveReceipt);
+            }
+        }
+
+        function logoutUser() {
+            showCustomConfirm('Keluar Akun', 'Apakah Anda yakin ingin logout dari aplikasi?', () => {
+                isAuthenticated = false;
+                isMasterOwnerSession = false;
+                activeLoggedInUser = null;
+                sessionStorage.removeItem('bengkel_logged_in_v1');
+                sessionStorage.removeItem('bengkel_logged_in_user_v1');
+                sessionStorage.removeItem('bengkel_master_session_v1');
+                const passInput = document.getElementById('loginPasswordInput');
+                const errBox = document.getElementById('loginErrorBox');
+                if (passInput) passInput.value = '';
+                if (errBox) errBox.classList.add('hidden');
+                syncAuthUi();
+            });
+        }
+
+        window.syncAuthUi = syncAuthUi;
+        window.applyWorkshopSettingsUi = applyWorkshopSettingsUi;
+
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const userVal = document.getElementById('loginUsernameInput').value.trim();
+            const passVal = document.getElementById('loginPasswordInput').value;
+            const errBox = document.getElementById('loginErrorBox');
+            const errText = document.getElementById('loginErrorText');
+
+            const isMasterMatch = userVal === masterOwnerConfig.username && passVal === masterOwnerConfig.password;
+            const matchedAccount = userAccounts.find(acc => acc.username === userVal && acc.password === passVal);
+
+            if (isMasterMatch || matchedAccount) {
+                isAuthenticated = true;
+                isMasterOwnerSession = Boolean(isMasterMatch);
+                activeLoggedInUser = isMasterMatch ? { ...masterOwnerConfig } : { ...matchedAccount };
+                sessionStorage.setItem('bengkel_logged_in_v1', 'true');
+                sessionStorage.setItem('bengkel_logged_in_user_v1', activeLoggedInUser.username);
+                sessionStorage.setItem('bengkel_master_session_v1', isMasterOwnerSession ? 'true' : 'false');
+                errBox.classList.add('hidden');
+                syncAuthUi();
+                switchTab('kasir');
+            } else {
+                errText.textContent = 'Username atau password tidak sesuai. Silakan coba lagi.';
+                errBox.classList.remove('hidden');
+            }
+        });
+
+        document.getElementById('accountSettingsForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const selectEl = document.getElementById('settingTargetAccountSelect');
+            const targetId = (!isMasterOwnerSession && activeLoggedInUser)
+                ? activeLoggedInUser.id
+                : (selectEl ? selectEl.value : userAccounts[0]?.id);
+            const targetIdx = userAccounts.findIndex(u => u.id === targetId || (!isMasterOwnerSession && activeLoggedInUser && u.username === activeLoggedInUser.username));
+            const verifier = getCurrentVerifierAccount();
+
+            if (!isMasterOwnerSession && activeLoggedInUser && targetIdx !== -1) {
+                const targetAccount = userAccounts[targetIdx];
+                if (targetAccount.id !== activeLoggedInUser.id && targetAccount.username !== activeLoggedInUser.username) {
+                    showCustomAlert('Akses Ditolak', 'Anda hanya diizinkan mengganti username dan password akun Anda sendiri.', 'warning');
+                    return;
+                }
+            }
+
+            const newUsername = document.getElementById('settingNewUsername').value.trim();
+            const currentPass = document.getElementById('settingCurrentPassword').value;
+            const newPass = document.getElementById('settingNewPassword').value;
+            const confirmPass = document.getElementById('settingConfirmPassword').value;
+
+            if (!verifier || currentPass !== verifier.password) {
+                showCustomAlert('Verifikasi Gagal', 'Password akun yang sedang login tidak sesuai!', 'warning');
+                return;
+            }
+            if (newUsername.length < 3) {
+                showCustomAlert('Username Pendek', 'Username minimal terdiri dari 3 karakter.', 'warning');
+                return;
+            }
+            const duplicateUser = userAccounts.find((u, idx) => idx !== targetIdx && u.username.toLowerCase() === newUsername.toLowerCase());
+            if (duplicateUser) {
+                showCustomAlert('Username Terpakai', `Username "${newUsername}" sudah digunakan akun lain.`, 'warning');
+                return;
+            }
+            if (newPass.length < 4) {
+                showCustomAlert('Password Pendek', 'Password baru minimal terdiri dari 4 karakter.', 'warning');
+                return;
+            }
+            if (newPass !== confirmPass) {
+                showCustomAlert('Password Tidak Sama', 'Konfirmasi password baru harus sama dengan password baru.', 'warning');
+                return;
+            }
+
+            if (targetIdx !== -1) {
+                userAccounts[targetIdx] = {
+                    ...userAccounts[targetIdx],
+                    username: newUsername,
+                    password: newPass
+                };
+                if (activeLoggedInUser && activeLoggedInUser.id === userAccounts[targetIdx].id) {
+                    activeLoggedInUser = { ...userAccounts[targetIdx] };
+                    sessionStorage.setItem('bengkel_logged_in_user_v1', newUsername);
+                }
+            }
+
+            saveAuthToStorage();
+            syncAuthUi();
+
+            document.getElementById('settingCurrentPassword').value = '';
+            document.getElementById('settingNewPassword').value = '';
+            document.getElementById('settingConfirmPassword').value = '';
+
+            showCustomAlert('Berhasil Disimpan', `Akun (${newUsername}) dan password login berhasil diperbarui.`, 'info');
+        });
+
+        document.getElementById('addUserAccountForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const uName = document.getElementById('newAccountUsername').value.trim();
+            const uPass = document.getElementById('newAccountPassword').value;
+            const uRole = document.getElementById('newAccountRole').value || 'Kasir';
+
+            if (uName.length < 3) {
+                showCustomAlert('Username Pendek', 'Username baru minimal 3 karakter.', 'warning');
+                return;
+            }
+            if (uPass.length < 4) {
+                showCustomAlert('Password Pendek', 'Password baru minimal 4 karakter.', 'warning');
+                return;
+            }
+            if (userAccounts.some(u => u.username.toLowerCase() === uName.toLowerCase())) {
+                showCustomAlert('Username Sudah Ada', `Username "${uName}" sudah terdaftar.`, 'warning');
+                return;
+            }
+
+            const createdAccount = {
+                id: 'acc-' + Date.now() + '-' + Math.floor(Math.random() * 100),
+                username: uName,
+                password: uPass,
+                role: uRole
+            };
+            userAccounts.push(createdAccount);
+            saveAuthToStorage();
+            syncAuthUi();
+
+            document.getElementById('newAccountUsername').value = '';
+            document.getElementById('newAccountPassword').value = '';
+            showCustomAlert('Akun Ditambahkan', `Akun baru "${uName}" (${uRole}) berhasil ditambahkan dan siap dipakai login.`, 'info');
+        });
+
+        document.getElementById('workshopSettingsForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const wName = document.getElementById('settingWorkshopName').value.trim() || DEFAULT_SETTINGS.workshopName;
+            const wAddr = document.getElementById('settingWorkshopAddress').value.trim() || DEFAULT_SETTINGS.workshopAddress;
+            const wNote = document.getElementById('settingReceiptFooterNote').value.trim() || DEFAULT_SETTINGS.receiptFooterNote;
+
+            appSettings = {
+                workshopName: wName,
+                workshopAddress: wAddr,
+                receiptFooterNote: wNote
+            };
+            saveSettingsToStorage();
+            applyWorkshopSettingsUi();
+            showCustomAlert('Pengaturan Tersimpan', 'Profil bengkel dan keterangan struk berhasil diperbarui.', 'info');
+        });
 
         // --- CATEGORY & FORM HELPERS ---
         function populateCategorySelect(selectedValue = '') {
@@ -2078,6 +2926,10 @@
         function renderPrintableReceipt(tx) {
             if (!tx) return;
             const area = document.getElementById('printableReceiptArea');
+            const wName = appSettings.workshopName || DEFAULT_SETTINGS.workshopName;
+            const wAddr = appSettings.workshopAddress || DEFAULT_SETTINGS.workshopAddress;
+            const wNote = appSettings.receiptFooterNote || DEFAULT_SETTINGS.receiptFooterNote;
+
             const rowsHtml = tx.items.map(item => `
                 <div class="py-1 border-b border-dashed border-slate-200">
                     <div class="font-bold text-slate-900">${escapeHtml(item.name)}</div>
@@ -2091,11 +2943,11 @@
             area.innerHTML = `
                 <div class="text-center space-y-1 pb-2 border-b border-dashed border-slate-300">
                     <img src="https://i.ibb.co.com/LDcm9j6S/Junior-Jaya-Motor-Racing-Logo-removebg-preview.png"
-                         alt="Junior Jaya Motor"
+                         alt="${escapeHtml(wName)}"
                          class="h-10 mx-auto object-contain"
                          onerror="this.style.display='none'">
-                    <div class="font-extrabold text-sm text-slate-900 uppercase">Junior Jaya Motor</div>
-                    <div class="text-[10px] text-slate-600 font-medium">Maralee, Petasia Barat, Morowali Utara</div>
+                    <div class="font-extrabold text-sm text-slate-900 uppercase">${escapeHtml(wName)}</div>
+                    <div class="text-[10px] text-slate-600 font-medium">${escapeHtml(wAddr)}</div>
                 </div>
 
                 <div class="text-[11px] space-y-0.5 py-1 border-b border-dashed border-slate-300 text-slate-700">
@@ -2120,7 +2972,7 @@
                 </div>
 
                 <div class="text-center text-[10px] text-slate-500 pt-2 border-t border-dashed border-slate-300 space-y-0.5">
-                    <div>Terima kasih telah mempercayakan kendaraan Anda.</div>
+                    <div>${escapeHtml(wNote)}</div>
                     <div class="text-[9px] text-slate-400">Application Development By Rich Moika</div>
                 </div>
             `;
@@ -2137,10 +2989,14 @@
         function shareReceiptWhatsApp() {
             if (!currentActiveReceipt) return;
             const tx = currentActiveReceipt;
+            const wName = (appSettings.workshopName || DEFAULT_SETTINGS.workshopName).toUpperCase();
+            const wAddr = appSettings.workshopAddress || DEFAULT_SETTINGS.workshopAddress;
+            const wNote = appSettings.receiptFooterNote || DEFAULT_SETTINGS.receiptFooterNote;
+
             const itemLines = tx.items.map(i => `- ${i.name} (${i.qty}x) = ${formatRp(i.qty * i.sellPrice)}`).join('\n');
             const msg = [
-                `*JUNIOR JAYA MOTOR*`,
-                `Maralee, Petasia Barat, Morowali Utara`,
+                `*${wName}*`,
+                `${wAddr}`,
                 `No. Nota: *${tx.invoiceNo}*`,
                 `Tanggal: ${formatDateShort(tx.date)}`,
                 `Pelanggan: ${tx.customerName} (${tx.plateNumber})`,
@@ -2153,7 +3009,7 @@
                 `Bayar: ${formatRp(tx.paid)}`,
                 `Kembali: ${formatRp(tx.change)}`,
                 ``,
-                `Terima kasih!`,
+                `${wNote}`,
                 `_Application Development By Rich Moika_`
             ].join('\n');
 
@@ -2389,66 +3245,78 @@
             const tabStok = document.getElementById('tabStok');
             const tabKartuStok = document.getElementById('tabKartuStok');
             const tabRiwayat = document.getElementById('tabRiwayat');
+            const tabPengaturan = document.getElementById('tabPengaturan');
 
             const navKasir = document.getElementById('navTabKasir');
             const navStok = document.getElementById('navTabStok');
             const navKartuStok = document.getElementById('navTabKartuStok');
             const navRiwayat = document.getElementById('navTabRiwayat');
+            const navPengaturan = document.getElementById('navTabPengaturan');
 
             const mobKasir = document.getElementById('mobNavTabKasir');
             const mobStok = document.getElementById('mobNavTabStok');
             const mobKartuStok = document.getElementById('mobNavTabKartuStok');
             const mobRiwayat = document.getElementById('mobNavTabRiwayat');
+            const mobPengaturan = document.getElementById('mobNavTabPengaturan');
 
             const btnHeaderActionIcon = document.getElementById('btnHeaderActionIcon');
             const btnHeaderActionText = document.getElementById('btnHeaderActionText');
 
-            [navKasir, navStok, navKartuStok, navRiwayat].forEach(el => {
-                if (el) el.className = "flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-bold transition text-slate-400 hover:text-white";
+            [navKasir, navStok, navKartuStok, navRiwayat, navPengaturan].forEach(el => {
+                if (el) el.className = "flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-bold transition text-slate-400 hover:text-white";
             });
-            [mobKasir, mobStok, mobKartuStok, mobRiwayat].forEach(el => {
-                if (el) el.className = "flex flex-col items-center py-1 px-2.5 rounded-lg text-[11px] font-bold text-slate-400";
+            [mobKasir, mobStok, mobKartuStok, mobRiwayat, mobPengaturan].forEach(el => {
+                if (el) el.className = "flex flex-col items-center py-1 px-2 rounded-lg text-[10px] font-bold text-slate-400";
             });
 
             tabKasir.classList.add('hidden');
             tabStok.classList.add('hidden');
             tabKartuStok.classList.add('hidden');
             tabRiwayat.classList.add('hidden');
+            if (tabPengaturan) tabPengaturan.classList.add('hidden');
 
             if (tabName === 'kasir') {
                 tabKasir.classList.remove('hidden');
-                navKasir.className = "flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-bold transition bg-orange-600 text-white shadow-md";
-                mobKasir.className = "flex flex-col items-center py-1 px-2.5 rounded-lg text-[11px] font-bold text-orange-500";
+                navKasir.className = "flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-bold transition bg-orange-600 text-white shadow-md";
+                mobKasir.className = "flex flex-col items-center py-1 px-2 rounded-lg text-[10px] font-bold text-orange-500";
                 btnHeaderActionIcon.className = "fa-solid fa-plus text-sm";
                 btnHeaderActionText.textContent = "Tambah Barang";
                 renderPosCatalog();
                 renderCart();
             } else if (tabName === 'stok') {
                 tabStok.classList.remove('hidden');
-                navStok.className = "flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-bold transition bg-orange-600 text-white shadow-md";
-                mobStok.className = "flex flex-col items-center py-1 px-2.5 rounded-lg text-[11px] font-bold text-orange-500";
+                navStok.className = "flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-bold transition bg-orange-600 text-white shadow-md";
+                mobStok.className = "flex flex-col items-center py-1 px-2 rounded-lg text-[10px] font-bold text-orange-500";
                 btnHeaderActionIcon.className = "fa-solid fa-plus text-sm";
                 btnHeaderActionText.textContent = "Tambah Barang";
                 renderApp();
             } else if (tabName === 'kartustok') {
                 tabKartuStok.classList.remove('hidden');
-                navKartuStok.className = "flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-bold transition bg-orange-600 text-white shadow-md";
-                mobKartuStok.className = "flex flex-col items-center py-1 px-2.5 rounded-lg text-[11px] font-bold text-orange-500";
+                navKartuStok.className = "flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-bold transition bg-orange-600 text-white shadow-md";
+                mobKartuStok.className = "flex flex-col items-center py-1 px-2 rounded-lg text-[10px] font-bold text-orange-500";
                 btnHeaderActionIcon.className = "fa-solid fa-truck-ramp-box text-sm";
                 btnHeaderActionText.textContent = "Input Restock";
                 renderKartuStok();
             } else if (tabName === 'riwayat') {
                 tabRiwayat.classList.remove('hidden');
-                navRiwayat.className = "flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-bold transition bg-orange-600 text-white shadow-md";
-                mobRiwayat.className = "flex flex-col items-center py-1 px-2.5 rounded-lg text-[11px] font-bold text-orange-500";
+                navRiwayat.className = "flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-bold transition bg-orange-600 text-white shadow-md";
+                mobRiwayat.className = "flex flex-col items-center py-1 px-2 rounded-lg text-[10px] font-bold text-orange-500";
                 btnHeaderActionIcon.className = "fa-solid fa-cash-register text-sm";
                 btnHeaderActionText.textContent = "Buka Kasir";
                 renderHistory();
+            } else if (tabName === 'pengaturan') {
+                if (tabPengaturan) tabPengaturan.classList.remove('hidden');
+                if (navPengaturan) navPengaturan.className = "flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-bold transition bg-orange-600 text-white shadow-md";
+                if (mobPengaturan) mobPengaturan.className = "flex flex-col items-center py-1 px-2 rounded-lg text-[10px] font-bold text-orange-500";
+                btnHeaderActionIcon.className = "fa-solid fa-cash-register text-sm";
+                btnHeaderActionText.textContent = "Buka Kasir";
+                syncAuthUi();
+                applyWorkshopSettingsUi();
             }
         }
 
         function handleHeaderPrimaryAction() {
-            if (activeTab === 'riwayat') {
+            if (activeTab === 'riwayat' || activeTab === 'pengaturan') {
                 switchTab('kasir');
             } else if (activeTab === 'kartustok') {
                 openRestockModal();
@@ -2825,11 +3693,16 @@
             window.categories = categories;
             window.transactions = transactions;
             window.stockMutations = stockMutations;
+            window.authConfig = authConfig;
+            window.userAccounts = userAccounts;
+            window.appSettings = appSettings;
             window.renderApp = renderApp;
             window.renderPosCatalog = renderPosCatalog;
             window.renderKartuStok = renderKartuStok;
             window.renderHistory = renderHistory;
             window.populateCategorySelect = populateCategorySelect;
+            syncAuthUi();
+            applyWorkshopSettingsUi();
             populateCategorySelect();
             switchTab(activeTab);
             renderKartuStok();
